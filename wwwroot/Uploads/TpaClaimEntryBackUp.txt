@@ -1,0 +1,1242 @@
+var TpaClaimEntryViewModel = function () {
+    var self = this;
+
+    self.ErrorBatch = ko.observable('');
+
+        self.EditItemError = ko.observable('');
+
+    self.ErrorClaim = ko.observable('');
+
+    self.Working = ko.observable(false);
+
+    self.BatchLocked = ko.observable(false);
+
+    self.VettingStatus = ko.observable(false);
+
+    self.ItemToEdit = ko.observable();
+
+    self.Diagnosis = ko.observableArray([]);
+
+    self.ClaimDiagnosis = ko.observableArray([]);
+
+    self.ServiceTypes = ko.observableArray([]);
+
+    self.Treatments = ko.observableArray([]);
+
+    self.Treatment = ko.observableArray('');
+
+    self.ReasonsForRejections = ko.observableArray([]);
+
+    self.Clients = ko.observableArray([]);
+
+    self.SelectedClient = ko.observable(0);
+
+    self.BatchId = ko.observable('');
+
+    self.PolicyNo = ko.observable('');
+
+    self.Batch = ko.observableArray([]);
+
+    self.AllClaims = ko.observableArray([]);
+
+    self.MemberClaims = ko.observableArray([]);
+
+    self.SearchClaim = ko.observable('');
+
+    self.range = ko.observable();
+
+    self.TypeOfVisit = ko.observable();
+
+    self.AdmissionDateString = ko.observable('');
+
+    self.DismissalDateString = ko.observable('');
+
+    self.ProcessCLaimNo = ko.observable();
+
+    self.ClaimType = ko.observable();
+
+    self.ClaimStatus = ko.observable();
+  
+
+
+
+    self.ClaimsFiltered = ko.computed(function () {
+        if (!self.SearchClaim() || self.SearchClaim().trim().length == 0) {
+            return self.AllClaims();
+        }
+
+        return ko.utils.arrayFilter(self.AllClaims(), function (cl) {
+            return (cl.FullPolicyNo.toLowerCase().indexOf(self.SearchClaim().toLowerCase()) > -1)
+            || (cl.Fullname.toLowerCase().indexOf(self.SearchClaim().toLowerCase()) > -1)
+            || (cl.InvoiceNo.toLowerCase().indexOf(self.SearchClaim().toLowerCase()) > -1);
+
+        });
+
+    }).extend({ throttle: 500 });;
+
+    self.NumberOfClaims = ko.computed(function () {
+        return self.Batch() ? self.Batch().length : 0;
+    });
+
+
+    self.TotalBatchAmount = ko.computed(function () {
+        var total = 0;
+        if (self.Batch()) {
+            ko.utils.arrayForEach(self.Batch(), function (item) {
+                total += item.TotalAmount;
+            })
+            return (total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else { return 0; }
+
+    });
+
+    self.TotalBatchSuspendedRejected = ko.computed(function () {
+        var total = 0;
+        if (self.Batch()) {
+            ko.utils.arrayForEach(self.Batch(), function (item) {
+                total += item.TotalRejectedAmount + item.TotalSuspendedAmount;
+            })
+            return (total);
+        } else { return 0; }
+
+    });
+
+    self.LoadSetup = function () {
+
+
+        var url = baseUrl + "Api/ClaimApi/GetSetup";
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+                    self.Diagnosis(data.Model.Diagnosis);
+                    self.Treatments(data.Model.Treatments);
+                    self.ServiceTypes(data.Model.ServiceTypes);
+                    self.ReasonsForRejections(data.Model.ReasonsForRejections);
+                    self.Clients(data.Model.Clients);
+
+                } else {
+                    self.ErrorBatch(data.Error);
+                }
+
+            },
+            error: function (data) {
+                console.log("Is not answered");
+            }
+        });
+
+
+    }
+
+    self.LoadClaimHistory = function () {
+
+
+        var url = baseUrl + "Api/ClaimApi/GetMemberClaims/" + self.PolicyNo();
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+
+                    $("#ClaimHistoryDialog").modal('show');
+
+                    self.MemberClaims(data.Model);
+                } else {
+                    self.ErrorBatch(data.Error);
+                }
+
+            },
+            error: function (data) {
+                console.log("Is not answered");
+            }
+        });
+
+
+    }
+
+    self.LoadBatch = function () {
+
+        self.ErrorBatch('');
+
+        if (self.Working() || self.BatchLocked() || self.SelectedClient() == 0) {
+            return;
+        }
+        var clientId = self.SelectedClient();
+
+        var monthSelected = self.range();
+
+        if (!self.SelectedClient() || self.SelectedClient().length == 0) {
+            self.ErrorBatch('No client selected');
+
+            return;
+        }
+
+        if (!self.range() || self.range().length == 0) {
+            self.ErrorBatch('No claim month selected');
+
+            return;
+        }
+
+
+        var url = baseUrl + "Api/ClaimApi/GetClientCLaims/" + clientId + '/' + monthSelected;
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+
+
+                    self.BatchLocked(true);
+
+                    self.Batch(data.Model);
+
+
+
+
+
+                    self.SearchClaim('');
+                    console.log('Check if remove all is working before everything', self.AllClaims().length);
+
+                    self.AllClaims.removeAll();
+                    //self.AllClaims([]);
+
+                    console.log('Check if remove all is working after using it', self.AllClaims().length);
+
+
+                    for (var z = 0; z < data.Model.length; z++) {
+                        self.AllClaims.push(data.Model[z]);
+                    }
+
+
+
+
+                    var table = $('#listTable').DataTable();
+                    //table.ajax.reload();
+
+
+
+
+
+
+                    //tbl.clear();
+                    //$.each(data.Model.Claims, function (idx, obj) {
+                    //    tbl.row.add(data.Model.Claims[idx]);
+                    //});
+                    //tbl.draw();
+
+
+
+                    self.SearchClaim('');
+
+                    self.ErrorBatch('');
+
+                } else {
+                    self.ErrorBatch(data.Error);
+                }
+
+            },
+            error: function (data) {
+                self.ErrorBatch(data);
+                console.log("Is not answered");
+            }
+        });
+
+
+    }
+
+
+   self.CloseBatch = function () {
+         self.AllClaims([]);
+       // self.AllClaims.removeAll();
+        self.BatchLocked(false);
+        self.Batch(null);
+        $(window.top.location = window.top.location);
+    }
+
+    self.PostBatch = function () {
+
+        if (!confirm("Are you sure you want to post that Batch? This Action is non reversible.")) {
+            return;
+        }
+
+        if (self.Working() || !self.BatchLocked()) {
+            self.ErrorBatch("No Batch");
+            return;
+        }
+
+        var url = baseUrl + "Api/ClaimApi/PostBatch/" + self.BatchId();
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify(self.BatchId()),
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+                    self.BatchLocked(false);
+                } else {
+                    alert(data.Error);
+                }
+
+            },
+            error: function (data) {
+                console.log("Is not answered");
+            }
+        });
+
+
+    }
+
+    self.ClaimId = ko.observable();
+
+    self.Claim = null;
+
+    self.ClaimIdTitle = ko.computed(function () {
+        if (self.ClaimId() == 0) {
+            return "New Claim";
+        } else {
+            return "Claim /  " + self.ClaimId();
+        }
+    });
+
+    self.ErrorTreatment = ko.observable('');
+
+
+    self.SelectedDiagnosis = ko.observable(null);
+
+    self.SelectedService = ko.observable(0);
+
+  
+
+    self.SelectedTreatment = ko.observable(null);
+
+    self.SelectedReasonForRejection = ko.observable();
+
+
+    self.ClaimTreatments = ko.observableArray([]);
+
+
+    self.PolicyNo = ko.observable('');
+
+    self.InvoiceNo = ko.observable('');
+
+
+    self.ServiceDate = ko.observable();
+
+    self.Member = ko.observable();
+
+
+
+    self.LoadMember = function () {
+
+        if (!self.PolicyNo() || self.PolicyNo().length == 0) {
+            self.Member(null);
+            return;
+        }
+
+
+        var url = baseUrl + "Api/ClaimApi/GetMember/" + self.PolicyNo();
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            crossDomain: true,
+            success: function (data) {
+
+                if (data.HasError == 0) {
+                    self.Member(data.Model);
+                    self.ErrorClaim('');
+                } else {
+                    self.ErrorClaim(data.Error);
+                }
+
+            },
+            error: function (data) {
+                console.log("Is not answered");
+            }
+        });
+
+
+    }
+
+    self.Physician = ko.observable('');
+
+    self._quantity = ko.observable(1);
+
+    self._unitPrice = ko.observable(0);
+    self._amountClaimed = ko.observable(0);
+
+
+
+    self.Quantity = ko.computed({
+        read: function () {
+            return self._quantity();
+        },
+        write: function (value) {
+
+            var v = parseInt(value);
+            self._quantity(v);
+            self._unitPrice(self._amountClaimed() / v);
+
+        }
+    });
+
+
+    self.UnitPrice = ko.computed({
+        read: function () {
+            return self._unitPrice();
+        },
+        write: function (value) {
+
+            var v = parseFloat(value);
+            self._unitPrice(v);
+            self._amountClaimed(self._quantity() * v);
+
+        }
+    });
+
+    self.AmountClaimed = ko.computed({
+        read: function () {
+            return self._amountClaimed();
+        },
+        write: function (value) {
+            var v = parseFloat(value);
+            self._amountClaimed(v);
+
+
+            self._unitPrice(v / self._quantity());
+        }
+    });
+
+
+    self.RejectedAmount = ko.observable(0);
+    self.SuspendedAmount = ko.observable(0);
+
+    self.ResetItem = function () {
+        self.SelectedTreatment(0);
+
+        self.Quantity(1);
+        self.UnitPrice(0);
+
+        self.SuspendedAmount(0);
+        self.RejectedAmount(0);
+
+
+        self.SelectedReasonForRejection(0);
+        self.ErrorTreatment('');
+
+
+    };
+
+
+    self.AddNewClaim = function () {
+        self.ClaimId(0);
+        self.Claim = null;
+        $("#ClaimDialog").modal();
+        self.ResetClaim();
+        //ErrorTreatment
+        self.ResetItem();
+
+
+    };
+
+
+    self.AddTreatment = function () {
+
+        if (!self.SelectedTreatment() || parseInt(self.Quantity()) == 0) {
+            self.ErrorTreatment("Treatment / Drug not set");
+
+            return;
+        }
+
+        if (!self.Quantity() || parseInt(self.Quantity()) == 0) {
+            self.ErrorTreatment("Quantity not set");
+
+            return;
+        }
+
+        if (!self.UnitPrice() || parseFloat(self.UnitPrice()) == 0) {
+            self.ErrorTreatment("Unit Price not set");
+
+            return;
+        }
+
+        var totalToBePaid = (parseFloat(self.Quantity()) * parseFloat(self.UnitPrice()) -
+            parseFloat(self.RejectedAmount()) - parseFloat(self.SuspendedAmount()));
+        console.log(totalToBePaid);
+        if (totalToBePaid < 0) {
+            self.ErrorTreatment("Rejected/Suspended amount greater than total Amount");
+
+            return;
+        }
+
+
+        var t1 = ko.utils.arrayFirst(self.ClaimTreatments(), function (item) {
+            return item.TreatmentId == self.SelectedTreatment();
+        });
+
+        if (t1 != null) {
+            self.ErrorTreatment("Drug already added");
+            return;
+        }
+
+        var t = ko.utils.arrayFirst(self.Treatments(), function (item) {
+            return item.Id == self.SelectedTreatment();
+        });
+
+        var rfrId = null;
+
+
+        if (self.SelectedReasonForRejection() && self.SelectedReasonForRejection() != 0) {
+            var rfr = ko.utils.arrayFirst(self.ReasonsForRejections(), function (item) {
+                return item.ReasonsId == self.SelectedReasonForRejection();
+            });
+
+
+
+
+
+            rfrId = rfr.ReasonsId;
+
+        } else if (parseFloat(self.SuspendedAmount()) > 0 || parseFloat(self.RejectedAmount()) > 0) {
+            self.ErrorTreatment("Reason for rejection/suspension not chosen");
+            return;
+        }
+
+
+
+        var ct = {
+            TreatmentId: t.Id,
+            Treatment: t.Name,
+            UnitPrice: parseFloat(self.UnitPrice()),
+            Quantity: parseInt(self.Quantity()),
+            SuspendedAmount: parseFloat(self.SuspendedAmount()),
+            RejectedAmount: parseFloat(self.RejectedAmount()),
+            ReasonForRejection: rfrId
+        };
+
+
+        self.ClaimTreatments.push(ct);
+
+        self.ResetItem();
+    };
+
+
+    self.DeleteTreatment = function (ct) {
+        console.log(ct);
+        self.ClaimTreatments.remove(ct);
+    };
+
+    self.EditQuantity = ko.observable('');
+    self.EditClaimId = ko.observable('');
+    self.EditUnitPrice = ko.observable('');
+    self.EditTreatment = ko.observable('');
+    self.EditTreatmentId = ko.observable('');
+    self.EditSuspendedAmount = ko.observable('');
+    self.EditRejectedAmount = ko.observable('');
+    self.RejectionOption = ko.observable('');
+
+    self.OtherReason = ko.observable('');
+
+
+    self.GetItemEdit = function (ct) {
+
+        self.EditItemError('');
+
+        self.ItemToEdit(ct);
+
+        console.log(ct);
+
+
+
+        $("#ItemEditDialog").modal('show');
+    };
+
+
+    self.CloseEditDialog = function () {
+        self.EditItemError('');
+        $("#ItemEditDialog").modal('hide');
+    };
+
+
+    self.PostItemEdit = function () {
+
+        self.EditItemError('');
+
+        var rfrId = null;
+        var inputOption = 0;
+
+
+        // Rejection Treatment
+        if (self.RejectionOption() == 1 && self.SelectedReasonForRejection() && self.SelectedReasonForRejection() != 0) {
+            var rfr = ko.utils.arrayFirst(self.ReasonsForRejections(), function (item) {
+                return item.ReasonsId == self.SelectedReasonForRejection();
+            });
+
+            inputOption = (parseFloat(self.ItemToEdit().UnitPrice) * parseFloat(self.ItemToEdit().Quantity));
+
+            rfrId = rfr.ReasonsId;
+
+            // Update the database
+
+
+            var newItem = {
+                ClaimId: self.ItemToEdit().ClaimId,
+                TreatmentId: self.ItemToEdit().TreatmentId,
+                Treatment: self.ItemToEdit().Treatment,
+                UnitPrice: parseFloat(self.ItemToEdit().UnitPrice),
+                Quantity: parseInt(self.ItemToEdit().Quantity),
+                SuspendedAmount: parseFloat(self.EditSuspendedAmount()),
+                RejectedAmount: inputOption,
+                ReasonForRejection: rfrId,
+                OtherReason: self.OtherReason(),
+                ClientBenefits: self.ItemToEdit().ClientBenefits,
+                RxId: self.ItemToEdit().RxId,
+                ItemService: self.ItemToEdit().ItemService,
+            };
+
+            console.log('new', newItem);
+
+
+            var url = baseUrl + "Api/ClaimApi/UpdateClaimItem";
+
+            return $.ajax({
+                url: url,
+                headers: { 'Access-Control-Allow-Origin': '*' },
+                contentType: 'application/json',
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(newItem),
+                crossDomain: true,
+                success: function (data) {
+                    if (data.HasError == 0) {
+
+                        // self.ClaimTreatments();
+
+
+                        var oldTreatment = ko.utils.arrayFirst(self.ClaimTreatments(), function (item) {
+                            return item.ClaimId == newItem.ClaimId && item.TreatmentId == newItem.TreatmentId;
+                        });
+
+                        self.ClaimTreatments.replace(oldTreatment, data.Model);
+
+                        //  self.LoadBatch();
+                        self.ItemToEdit('');
+
+                        self.EditSuspendedAmount(0);
+                        self.OtherReason('');
+                        self.EditItemError('');
+
+
+                        $("#ItemEditDialog").modal('hide');
+
+                    } else {
+                        self.EditItemError(data.Error);
+                    }
+                },
+                error: function (data) {
+                    self.EditItemError(data);
+                }
+            });
+        }
+        else
+
+            // Suspension Treatment
+            if (self.RejectionOption() == 0 && self.SelectedReasonForRejection() && self.SelectedReasonForRejection() != 0) {
+                var rfr = ko.utils.arrayFirst(self.ReasonsForRejections(), function (item) {
+                    return item.ReasonsId == self.SelectedReasonForRejection();
+                });
+
+                inputOption = 0;
+
+                rfrId = rfr.ReasonsId;
+
+                // Update the database
+
+
+                var newItem = {
+                    ClaimId: self.ItemToEdit().ClaimId,
+                    TreatmentId: self.ItemToEdit().TreatmentId,
+                    Treatment: self.ItemToEdit().Treatment,
+                    UnitPrice: parseFloat(self.ItemToEdit().UnitPrice),
+                    Quantity: parseInt(self.ItemToEdit().Quantity),
+                    SuspendedAmount: parseFloat(self.EditSuspendedAmount()),
+                    RejectedAmount: inputOption,
+                    ReasonForRejection: rfrId,
+                    OtherReason: self.OtherReason(),
+                    ClientBenefits: self.ItemToEdit().ClientBenefits,
+                    RxId: self.ItemToEdit().RxId,
+                    ItemService: self.ItemToEdit().ItemService,
+                };
+
+                console.log('new', newItem);
+
+
+                var url = baseUrl + "Api/ClaimApi/UpdateClaimItem";
+
+                return $.ajax({
+                    url: url,
+                    headers: { 'Access-Control-Allow-Origin': '*' },
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: JSON.stringify(newItem),
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.HasError == 0) {
+
+                            // self.ClaimTreatments();
+
+
+                            var oldTreatment = ko.utils.arrayFirst(self.ClaimTreatments(), function (item) {
+                                return item.ClaimId == newItem.ClaimId && item.TreatmentId == newItem.TreatmentId;
+                            });
+
+                            self.ClaimTreatments.replace(oldTreatment, data.Model);
+
+                            //  self.LoadBatch();
+                            self.ItemToEdit('');
+
+                            self.EditSuspendedAmount(0);
+                            self.OtherReason('');
+                            self.EditItemError('');
+
+
+                            $("#ItemEditDialog").modal('hide');
+
+                        } else {
+                            self.EditItemError(data.Error);
+                        }
+                    },
+                    error: function (data) {
+                        self.EditItemError(data);
+                    }
+                });
+            }
+
+            else {
+                self.EditItemError('No reason for Rejection or  Suspension selected!!');
+
+            }
+
+
+
+
+
+
+    };
+
+
+
+    self.TotalClaimAmount = ko.computed(function () {
+        var total = 0;
+        if (self.ClaimTreatments()) {
+
+            ko.utils.arrayForEach(self.ClaimTreatments(), function (item) {
+
+                total += parseFloat(item.Quantity) * parseFloat(item.UnitPrice);
+            })
+            return parseFloat(total);
+        } else {
+            return parseFloat(0);
+        }
+
+    });
+
+    self.TotalClaimRejectedAmount = ko.computed(function () {
+        var total = 0;
+        if (self.Batch()) {
+            ko.utils.arrayForEach(self.ClaimTreatments(), function (item) {
+                total += item.RejectedAmount;
+            })
+            return parseFloat(total);
+        } else { return parseFloat(0); }
+
+    });
+
+    self.TotalClaimSuspendedAmount = ko.computed(function () {
+        var total = 0;
+        if (self.Batch()) {
+            ko.utils.arrayForEach(self.ClaimTreatments(), function (item) {
+                total += item.SuspendedAmount;
+            })
+            return (total);
+        } else { return 0; }
+
+    });
+
+    self.TotalClaimToBePaid = ko.computed(function () {
+        var total = 0;
+        if (self.ClaimTreatments()) {
+
+            ko.utils.arrayForEach(self.ClaimTreatments(), function (item) {
+
+                total += (parseFloat(item.Quantity) * parseFloat(item.UnitPrice)) - item.RejectedAmount - item.SuspendedAmount;
+            })
+            return parseFloat(total);
+        } else {
+            return parseFloat(0);
+
+        }
+
+    });
+
+
+    self.ResetClaim = function () {
+        self.PolicyNo('');
+
+        self.ClaimTreatments([]);
+
+        self.Member(null);
+
+        self.SelectedService(0);
+
+        self.SelectedDiagnosis([]);
+
+        self.ServiceDate('');
+
+        self.InvoiceNo('');
+
+        self.Physician('');
+
+        self.ErrorClaim('');
+    };
+
+
+    self.SaveClaim = function () {
+
+        self.ErrorClaim('');
+
+        if (!self.Member()) {
+            self.ErrorClaim('Member not set');
+            return;
+        }
+
+        //if (!self.SelectedDiagnosis() || self.SelectedDiagnosis().length == 0) {
+        //    self.ErrorClaim('No diagnosis set');
+
+        //    return;
+        //}
+
+
+        if (!self.SelectedService() || self.SelectedService() == 0) {
+            self.ErrorClaim('No Service Type set');
+
+            return;
+        }
+
+        if (!self.ServiceDate() || self.ServiceDate().length == 0) {
+            self.ErrorClaim('No Service date set');
+
+            return;
+        }
+
+        //if (!self.InvoiceNo() || self.InvoiceNo().length == 0) {
+        //    self.ErrorClaim('No Serial #');
+
+        //    return;
+        //}
+
+        if (!self.ClaimTreatments() || self.ClaimTreatments().length == 0) {
+            self.ErrorClaim('No treatment/drug set');
+
+            return;
+        }
+
+        if (self.VettingStatus()) {
+            var vettingStat = 1;
+        }
+        else {
+            vettingStat = 0;
+        }
+
+        var claim = {
+            ClaimId: self.ClaimId(),
+            BatchId: self.BatchId(),
+            ServiceDateString: self.ServiceDate(),
+            MemberId: self.Member().MemberId,
+            ClientBenefits: self.SelectedService(),
+            DetentionDate: self.ServiceDate(),
+            InvoiceNo: self.InvoiceNo(),
+            UserId: userId,
+            Physician: self.Physician(),
+            ProductId: self.Member().ProductId,
+            Diagnosis: self.SelectedDiagnosis(),
+            Treatments: self.ClaimTreatments(),
+            ClaimStatus: vettingStat,
+            ProcessCLaimNo: self.ProcessCLaimNo(),
+            ClaimType: self.ClaimType(),
+         
+        }
+
+        self.currentclaim = ko.observable(claim);
+
+
+        var url = baseUrl + "Api/ClaimApi/SaveClaim";
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify(claim),
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+
+
+
+
+                    if (self.ClaimId() != 0) {
+
+                        console.log('Claim Length before everything', self.AllClaims().length);
+
+
+                        var oldCLaim = ko.utils.arrayFirst(self.AllClaims(), function (item) {
+                            return item.ClaimId == claim.ClaimId;
+                        });
+
+                        self.AllClaims.replace(oldCLaim, data.Model);
+
+
+
+                        //self.AllClaims.remove(function (item) {
+                        //    //'item' will be one of the items in the array,
+                        //    //thus we compare the name property of it to the value we want to remove
+                        //    return item.ClaimId == claim.ClaimId;
+                        //});
+
+
+
+
+                        console.log('New Claim Length after deletion', self.AllClaims().length);
+
+
+
+
+                        var table = $('#listTable').DataTable();
+                        table.clear();
+
+                        table.destroy();
+
+
+
+
+
+                        // self.AllClaims.push(data.Model);
+
+                        self.UpdatedCLaims = ko.observableArray([]);
+
+
+                        self.UpdatedCLaims(self.AllClaims().slice(0));
+
+
+
+                        self.AllClaims.removeAll();
+
+                        console.log(' Claim Length after everything', self.AllClaims().length);
+
+                        console.log(' Updated Object everything', self.UpdatedCLaims().length);
+
+
+                        self.AllClaims(self.UpdatedCLaims().slice(0));
+
+                        $('#listTable').DataTable();
+
+
+                    }
+
+
+
+                    self.ResetClaim();
+
+                    $("#ClaimDialog").modal('hide');
+
+                } else {
+                    self.ErrorClaim(data.Error);
+                }
+            },
+            error: function (data) {
+                self.ErrorClaim(data);
+            }
+        });
+
+
+
+    };
+
+
+    self.DeleteClaim = function (claim) {
+
+        var url = baseUrl + "Api/ClaimApi/DeleteClaim/" + claim.ClaimId;
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'DELETE',
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+                    self.AllClaims.remove(claim);
+                } else {
+                    alert(data.Error);
+                }
+
+            },
+            error: function (data) {
+                console.log("Is not answered");
+            }
+        });
+
+
+    }
+
+
+    self.EditClaim = function (claim) {
+        self.ErrorClaim('');
+
+        var url = baseUrl + "Api/ClaimApi/Edit/" + claim.ClaimId;
+
+
+        return $.ajax({
+            url: url,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            crossDomain: true,
+            success: function (data) {
+                if (data.HasError == 0) {
+                    //console.log('This line here');
+                    //console.log(claim.ClaimId);
+                    self.ClaimId(claim.ClaimId);
+                    self.Claim = claim;
+
+                    $("#ClaimDialog").modal('show');
+
+                    self.Member(data.Model.Member);
+
+                    self.PolicyNo(data.Model.Member.PolicyNo);
+                    self.InvoiceNo(data.Model.InvoiceNo);
+                    self.ServiceDate(data.Model.ServiceDateString);
+
+                    self.AdmissionDateString(data.Model.AdmissionDateString);
+
+                    self.DismissalDateString(data.Model.DismissalDateString);
+
+                    self.TypeOfVisit(data.Model.ClientBenefits);
+
+                    self.ProcessCLaimNo(data.Model.ProcessClaimNo);
+
+                    self.ClaimType(data.Model.ClaimType);
+
+                    self.BatchId(data.Model.BatchId);
+
+                    self.ClaimStatus(data.Model.ClaimStatus);
+
+                    console.log(data.Model.ClientBenefits);
+
+
+                    self.SelectedService(data.Model.ClientBenefits);
+
+
+                    if (data.Model.ClaimStatus == 1) {
+                        self.VettingStatus(true);
+                    }
+                    else {
+                        self.VettingStatus(false);
+                    }
+
+                    console.log(self.SelectedService());
+
+                    $("#ServiceCbx").trigger("chosen:updated");
+
+
+                    self.Physician(data.Model.Physician);
+
+                    // console.log(self.Diagnosis()[0]);
+
+                    //var diag = [];
+                    //for (var k = 0; k++; data.Model.Diagnosis) {
+
+                    //    diag.push(c);
+                    //}
+
+                    var differences = ko.utils.compareArrays(self.Diagnosis, data.Model.Diagnosis);
+                    var diag = [];
+                    //ko.utils.arrayForEach(data.Model.Diagnosis, function (d) {
+                    //    var d = ko.utils.arrayFirst(self.Diagnosis(), function (item) {
+                    //        return (item.DiagnosisId == d.DiagnosisId);
+                    //    });
+                    //    if (d != null) {
+                    //        diag.push(d);
+                    //    }
+                    //});
+
+                    ko.utils.arrayForEach(data.Model.Diagnosis, function (d) {
+                        //var d = ko.utils.arrayFirst(self.Diagnosis(), function (item) {
+                        //    return (item.DiagnosisId == d.DiagnosisId);
+                        //});
+                        if (d != null) {
+                            diag.push(d);
+                        }
+                    });
+
+
+                    self.ClaimDiagnosis(data.Model.Diagnosis);
+                    self.SelectedDiagnosis(diag);
+
+                    $("#SelectedDiagnosisCbx").trigger("chosen:updated");
+
+
+                    self.ClaimTreatments(data.Model.Treatments);
+
+                    self.ResetItem();
+
+
+                } else {
+                    alert(data.Error);
+                }
+
+            },
+            error: function (data) {
+                console.log("Is not answered");
+            }
+        });
+
+    };
+
+
+
+    self.PrintClaim = function (claim) {
+        console.log(claim);
+    };
+
+    self.RefundId = ko.observable();
+    self.AmountRefunded = ko.observable(0);
+    self.DateRefunded = ko.observable('');
+    self.ProviderId = ko.observable();
+    self.selectedProvider = ko.observableArray();
+
+
+    self.SaveRefund = function () {
+        console.log('refund');
+        if (!self.Member()) {
+            self.ErrorClaim('Member not set');
+            return;
+        }
+        if (!self.InvoiceNo() || self.InvoiceNo().length == 0) {
+            self.ErrorClaim('No Serial #');
+
+            return;
+        }
+        if (!self.AmountRefunded() || self.AmountRefunded().length == 0) {
+            self.ErrorClaim('No Refund Amount');
+
+            return;
+        }
+        if (!self.DateRefunded() || self.DateRefunded().length == 0) {
+            self.ErrorClaim('No Refund Date');
+
+            return;
+        }
+        if (!self.selectedProvider() || self.selectedProvider().length == 0) {
+            self.ErrorClaim('No Provider Set');
+
+            return;
+        }
+
+        var refund = {
+            RefundId: 0,
+            MemberId: self.Member().MemberId,
+            AmountRefunded: self.AmountRefunded(),
+            DateRefunded: self.DateRefunded(),
+           InvoiceNo: self.InvoiceNo(),
+           ProviderId: self.selectedProvider().ProviderId
+        };
+
+    console.log(refund);
+
+        $.ajax({
+
+            url: baseUrl + 'Api/ClaimApi/Refunds',
+            type: 'POST',
+            crossDomain: true,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            contentType: "application/json",
+            dataType: 'json',
+            data: JSON.stringify(refund),
+            success: function (data) {
+                
+                if (data.HasError == 0) {
+                    
+                   window.location.href = baseUrl + "Entries/RefundLists";
+                }
+                else {
+                    self.ErrorClaim(data.Error);
+                }
+            },
+            error: function (data) {
+                self.ErrorClaim(error);
+            }
+        });
+
+    };
+
+    self.LoadSetup();
+
+
+    self.Provider= ko.observableArray([]);
+    self.LoadProviders = function () {
+        
+        $.ajax({
+
+            url: baseUrl + 'Api/ClaimApi/ProviderList',
+            type: 'GET',
+            crossDomain: true,
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            dataType: 'json',
+            success: function (data) {
+                
+                if (data.HasError == 0) {
+                    self.Provider(data.Model);
+                    console.log(data);
+                }
+
+            },
+            error: function (request, error) {
+                console.log(error);
+            }
+        });
+
+        
+
+    }
+    self.LoadProviders();
+
+}

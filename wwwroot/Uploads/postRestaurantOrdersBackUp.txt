@@ -1,0 +1,142 @@
+import 'dart:convert';
+// import 'package:beamer/beamer.dart';
+import 'package:flutter/material.dart';
+import 'package:frankie_s/API/baseUrl.dart';
+import 'package:frankie_s/API/postTransactions.dart';
+import 'package:frankie_s/API/uploadReceipt.dart';
+import 'package:frankie_s/Model/deliveryOrderModel.dart';
+import 'package:frankie_s/Model/employees.dart';
+import 'package:frankie_s/Model/model.dart';
+import 'package:frankie_s/Model/orderSource.dart';
+import 'package:frankie_s/Model/tableModel.dart';
+import 'package:frankie_s/Model/taxModel.dart';
+import 'package:frankie_s/Model/transactionDetails.dart';
+import 'package:frankie_s/Widget/newReceiptTaxInclusive.dart';
+import 'package:frankie_s/Widget/showmeals.dart';
+import 'package:frankie_s/ui/sharedUI/splashscreen.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+postOrders(BuildContext context, List<FoodItem> foodItems,receiptNumber) async {
+  try {
+    int? getSelectedTableId;
+    for (var element in tablesList.tablesModel!
+        .where((value) => value.name == context.read<Model>().tableNumber)) {
+      // print(element.id);
+      getSelectedTableId = element.tableCode!;
+    }
+    // print('getSelectedTableId $getSelectedTableId');
+    int? getSelectedWaiterId;
+    for (var element in employeesList.employeesModel!
+        .where((value) => '${value.firstname!} ${value.middlename!} ${value.lastname!}' == context.read<Model>().waitressName)) {
+      // print(element.id);
+      getSelectedWaiterId = element.id!;
+    }
+    // print('getSelectedWaiterId $getSelectedWaiterId');
+    // print(userId);
+    // print(receiptNumber);
+    // print(userLocationId);
+    // print(context.read<Model>().orderSource);
+    // print(getSelectedSourceId);
+    // print(context.read<Model>().orderId.text);
+    // print(context.read<Model>().rider);
+    // print(getSelectedRiderId);
+    // print(DateTime.now());
+    // for (var element in foodItems) {
+    //   print(element.id);
+    //   print(element.quantity);
+    //   print(element.comment);
+    // }
+    // print(getSelectTableId);
+    // var data = DeliveryOrderModel.fromJson({
+    //               "salesAgentId": userId,
+    //               "locationId": userLocationId,
+    //               "tableId": getSelectedSourceId,
+    //               "orderId": context.read<Model>().orderId.text,
+    //               // "waitressName": getSelectedRiderId,
+    //               "orderDate": DateTime.now(),
+    //               "orderDetails": [
+    //                 for (var element in foodItems)
+    //                   {
+    //                     "id": element.id,
+    //                     // "productName": element.name,
+    //                     "quantity": element.quantity,
+    //                     // "price": element.price,
+    //                     "comment": element.comment,
+    //                     // "description": element.description,
+    //                     // "img": element.imgPath,
+    //                     // "categoryId": element.categoryId,
+    //                     // "timestamp": element.timestamp,
+    //                   }
+    //               ],
+    //             });
+
+    // print(data.orderId);
+    // print(data.orderDate);
+
+    var url = Uri.parse('$baseUrl/api/orders');
+    var response = await http.post(url,
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json'
+        },
+        // body: jsonEncode(data.toJson())
+        body: jsonEncode({
+          "sourceId": 2,
+          'waiterId':getSelectedWaiterId,
+          // 'customerName':context.read<Model>().customerName.text,
+          // 'customerPhone':context.read<Model>().customerPhoneNumber,
+          // 'customerAddress':context.read<Model>().customerAddress.text,
+          "salesAgentId": userId,
+          "locationId": userLocationId,
+          "orderNumber": context.read<Model>().orderId.text,
+          'receiptNumber':receiptNumber,
+          "tableId": getSelectedTableId,
+          // "typeId": 0,
+          "orderItems": [
+            for (var item in foodItems)
+              {
+                "itemId": item.id,
+                "quantity": item.quantity,
+                "comment": item.comment,
+              }
+          ]
+        })
+        );
+    var resp = jsonDecode(response.body);
+    print(resp);
+    // Navigator.pop(context);
+    if (resp['succeeded']) {
+      // print("order object sent");
+      // await uploadReceipt(context, doc, "Star TSP143IIIBI Cutter",
+      //     "${context.read<Model>().orderId.text}.pdf", "order", foodItems);
+
+      // var snackBar = SnackBar(content: Text("Operation successful"));
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // foodItems.clear();
+      // context.read<Model>().disposeValues();
+      // // taxesList.taxModel!.clear();
+      // bloc.emptyCart(foodItems, context);
+      // Get.toNamed("/Splashscreen");
+      var salesAmount = 0.0;
+      for (var element in foodItems) {
+        salesAmount = salesAmount + element.price!;
+      }
+
+     await postTransactions(context, foodItems, receiptNumber, 'doc', salesAmount, context.read<Model>().orderId.text);
+    } else {
+      Navigator.pop(context);
+      var snackBar = SnackBar(content: Text("Sorry, operation failed"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  } catch (e) {
+    Navigator.pop(context);
+    print(e);
+    var snackBar = SnackBar(content: Text("Sorry, operation failed"));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+}
