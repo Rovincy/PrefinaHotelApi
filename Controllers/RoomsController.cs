@@ -38,9 +38,9 @@ namespace HotelWebApi.Controllers
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
             //dev
-            var url = $"{Request.Scheme}://{Request.Host}//";
+            //var url = $"{Request.Scheme}://{Request.Host}//";
             //prod
-            //var url = $"{Request.Scheme}://{Request.Host}/2i-api//";
+            var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
             var response = await _context.Rooms.Where(x => x.IsActive == true).OrderBy(x => x.Name.Trim()).ToListAsync();
             foreach (var room in response)
             {
@@ -52,9 +52,9 @@ namespace HotelWebApi.Controllers
         public async Task<ActionResult<IEnumerable<NewRoomDto>>> GetAllActiveRooms()
         {
             //dev
-            var url = $"{Request.Scheme}://{Request.Host}//";
+            //var url = $"{Request.Scheme}://{Request.Host}//";
             //prod
-            //var url = $"{Request.Scheme}://{Request.Host}/2i-api//";
+            var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
             var rooms = await _context.Rooms
                 .Where(x => x.IsActive == true)
                 .Include(x => x.Type) // Eagerly load RoomType
@@ -80,9 +80,9 @@ namespace HotelWebApi.Controllers
         public async Task<ActionResult<IEnumerable<NewRoomDto>>> GetRoomsDetails(int? roomTypeId)
         {
             //dev
-            var url = $"{Request.Scheme}://{Request.Host}//";
+            //var url = $"{Request.Scheme}://{Request.Host}//";
             //prod
-            //var url = $"{Request.Scheme}://{Request.Host}/2i-api//";
+            var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
             var rooms = await _context.Rooms
                 .Where(x => x.IsActive == true && x.TypeId==roomTypeId)
                 .Include(x => x.Type) // Eagerly load RoomType
@@ -116,9 +116,9 @@ namespace HotelWebApi.Controllers
         public async Task<ActionResult<IEnumerable<Room>>> GetAllRooms()
         {
             //dev
-            var url = $"{Request.Scheme}://{Request.Host}//";
+            //var url = $"{Request.Scheme}://{Request.Host}//";
             //prod
-            //var url = $"{Request.Scheme}://{Request.Host}/2i-api//";
+            var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
             var response = await _context.Rooms.OrderBy(x => x.Name.Trim()).ToListAsync(); 
             
             foreach (var room in response)

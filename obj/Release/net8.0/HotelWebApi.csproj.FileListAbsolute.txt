@@ -279,3 +279,4 @@ D:\PrefinaHotel\HotelWebApi\obj\Release\net8.0\refint\HotelWebApi.dll
 D:\PrefinaHotel\HotelWebApi\obj\Release\net8.0\HotelWebApi.pdb
 D:\PrefinaHotel\HotelWebApi\obj\Release\net8.0\HotelWebApi.genruntimeconfig.cache
 D:\PrefinaHotel\HotelWebApi\obj\Release\net8.0\ref\HotelWebApi.dll
+D:\PrefinaHotel\HotelWebApi\obj\Release\net8.0\HotelWebApi.sourcelink.json

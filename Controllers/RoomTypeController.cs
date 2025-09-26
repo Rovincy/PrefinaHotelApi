@@ -37,9 +37,9 @@ namespace HotelWebApi.Controllers
         public async Task<ActionResult<IEnumerable<RoomType>>> GetRoomTypes()
         {
             //dev
-            var url = $"{Request.Scheme}://{Request.Host}//";
+            //var url = $"{Request.Scheme}://{Request.Host}//";
             //prod
-            //var url = $"{Request.Scheme}://{Request.Host}/2i-api//";
+            var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
             var response = await _context.RoomTypes.OrderBy(x=>x.Name.Trim()).ToListAsync();
             //var response = await _context.Rooms.OrderBy(x => x.Name.Trim()).ToListAsync();
 
