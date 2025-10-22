@@ -3,8 +3,40 @@
   "WorkspaceRootPath": "D:\\PrefinaHotel\\HotelWebApi\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\dtos\\billing\\billingcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:dtos\\billing\\billingcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\usermodels\\billingshistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:usermodels\\billingshistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\usermodels\\companybill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:usermodels\\companybill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\usermodels\\billing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:usermodels\\billing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\usermodels\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:usermodels\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\controllers\\paymentmethodcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:controllers\\paymentmethodcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{744BDF9F-A653-40C3-AB5E-FEA2F04D5F4F}|HotelWebApi.csproj|d:\\prefinahotel\\hotelwebapi\\usermodels\\guest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,7 +98,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,20 +110,111 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BillingCreateDto.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Dtos\\Billing\\BillingCreateDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\Billing\\BillingCreateDto.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\Dtos\\Billing\\BillingCreateDto.cs",
+              "RelativeToolTip": "Dtos\\Billing\\BillingCreateDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T19:07:03.36Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BillingsHistory.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\BillingsHistory.cs",
+              "RelativeDocumentMoniker": "UserModels\\BillingsHistory.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\BillingsHistory.cs",
+              "RelativeToolTip": "UserModels\\BillingsHistory.cs",
+              "ViewState": "AQIAAAsAAACAZmZmZmYqwBYAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T19:02:17.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CompanyBill.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\CompanyBill.cs",
+              "RelativeDocumentMoniker": "UserModels\\CompanyBill.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\CompanyBill.cs",
+              "RelativeToolTip": "UserModels\\CompanyBill.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T19:01:42.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Billing.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\Billing.cs",
+              "RelativeDocumentMoniker": "UserModels\\Billing.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\Billing.cs",
+              "RelativeToolTip": "UserModels\\Billing.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T19:00:14.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "BillingController.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\BillingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BillingController.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\BillingController.cs",
+              "RelativeToolTip": "Controllers\\BillingController.cs",
+              "ViewState": "AQIAAEMAAAAA0szMzMwuwFAAAABbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T19:00:05.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PaymentMethod.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\PaymentMethod.cs",
+              "RelativeDocumentMoniker": "UserModels\\PaymentMethod.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\PaymentMethod.cs",
+              "RelativeToolTip": "UserModels\\PaymentMethod.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T17:55:00.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PaymentMethodController.cs",
+              "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\PaymentMethodController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PaymentMethodController.cs",
+              "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\PaymentMethodController.cs",
+              "RelativeToolTip": "Controllers\\PaymentMethodController.cs",
+              "ViewState": "AQIAABIAAACAmZmZmZkdwCUAAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T17:54:43.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "RoomTypeController.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\RoomTypeController.cs",
               "RelativeDocumentMoniker": "Controllers\\RoomTypeController.cs",
               "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\RoomTypeController.cs",
               "RelativeToolTip": "Controllers\\RoomTypeController.cs",
-              "ViewState": "AQIAABsAAAAAmpmZmZkdwCkAAABJAAAA",
+              "ViewState": "AQIAABYAAACAOTMzMzPjvyoAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-25T16:17:29.333Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 11,
               "Title": "RoomType.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\RoomType.cs",
               "RelativeDocumentMoniker": "UserModels\\RoomType.cs",
@@ -108,7 +227,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "Guest.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\Guest.cs",
               "RelativeDocumentMoniker": "UserModels\\Guest.cs",
@@ -121,7 +240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 14,
               "Title": "Booking.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\Booking.cs",
               "RelativeDocumentMoniker": "UserModels\\Booking.cs",
@@ -134,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 16,
               "Title": "GuestCreateDto.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Dtos\\Guest\\GuestCreateDto.cs",
               "RelativeDocumentMoniker": "Dtos\\Guest\\GuestCreateDto.cs",
@@ -147,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 15,
               "Title": "GuestsController.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\GuestsController.cs",
               "RelativeDocumentMoniker": "Controllers\\GuestsController.cs",
@@ -160,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 17,
               "Title": "Room.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\UserModels\\Room.cs",
               "RelativeDocumentMoniker": "UserModels\\Room.cs",
@@ -173,20 +292,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "RoomsController.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\RoomsController.cs",
               "RelativeDocumentMoniker": "Controllers\\RoomsController.cs",
               "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\RoomsController.cs",
               "RelativeToolTip": "Controllers\\RoomsController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAHgAAABJAAAA",
+              "ViewState": "AQIAAAwAAACAZmZmZmYkwCgAAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-07T09:18:41.344Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 19,
               "Title": "PasswordHasher.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Helpers\\PasswordHasher.cs",
               "RelativeDocumentMoniker": "Helpers\\PasswordHasher.cs",
@@ -198,7 +317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -206,12 +325,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-07T08:56:29.754Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-07T08:56:29.754Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 18,
               "Title": "AutoMapper.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Helpers\\AutoMapper.cs",
               "RelativeDocumentMoniker": "Helpers\\AutoMapper.cs",
@@ -223,7 +341,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "BookingController.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\BookingController.cs",
               "RelativeDocumentMoniker": "Controllers\\BookingController.cs",
@@ -236,20 +354,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\PrefinaHotel\\HotelWebApi\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAQwCEAAAAAAAAA",
+              "ViewState": "AQIAAAQAAAC4mZmZmZklwCEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-07T08:42:32.647Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 20,
               "Title": "UsersController.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
@@ -262,7 +380,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 21,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "D:\\PrefinaHotel\\HotelWebApi\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",

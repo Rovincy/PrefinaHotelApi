@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KoHHT/qoZQv75Nc88baJtMArarn6I+Imf8Asc2ctQgQ=",
+  "Hash": "cqcGlMRTWhsMrpV46tVNko/Qsb0hVf1MmWC6QIOIj5M=",
   "Source": "HotelWebApi",
   "BasePath": "_content/HotelWebApi",
   "Mode": "Default",
@@ -1005,6 +1005,25 @@
       "OriginalItemSpec": "wwwroot\\Uploads\\Rooms\\39581b7f-4d54-408a-a268-94775919d1c4.jpg"
     },
     {
+      "Identity": "D:\\PrefinaHotel\\HotelWebApi\\wwwroot\\Uploads\\Rooms\\67374d63-2566-4fcf-a041-f9cf1f315e22.jpg",
+      "SourceId": "HotelWebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\PrefinaHotel\\HotelWebApi\\wwwroot\\",
+      "BasePath": "_content/HotelWebApi",
+      "RelativePath": "Uploads/Rooms/67374d63-2566-4fcf-a041-f9cf1f315e22.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Rooms\\67374d63-2566-4fcf-a041-f9cf1f315e22.jpg"
+    },
+    {
       "Identity": "D:\\PrefinaHotel\\HotelWebApi\\wwwroot\\Uploads\\Rooms\\752bd022-8c5c-4da6-87c5-73aabff973cf.jpg",
       "SourceId": "HotelWebApi",
       "SourceType": "Discovered",
@@ -1022,6 +1041,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Uploads\\Rooms\\752bd022-8c5c-4da6-87c5-73aabff973cf.jpg"
+    },
+    {
+      "Identity": "D:\\PrefinaHotel\\HotelWebApi\\wwwroot\\Uploads\\Rooms\\8874df12-498c-4ca7-b0a3-c2f6f33ef6d0.jpg",
+      "SourceId": "HotelWebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\PrefinaHotel\\HotelWebApi\\wwwroot\\",
+      "BasePath": "_content/HotelWebApi",
+      "RelativePath": "Uploads/Rooms/8874df12-498c-4ca7-b0a3-c2f6f33ef6d0.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Rooms\\8874df12-498c-4ca7-b0a3-c2f6f33ef6d0.jpg"
     },
     {
       "Identity": "D:\\PrefinaHotel\\HotelWebApi\\wwwroot\\Uploads\\RoomsType\\145f16f8-2733-4ce4-b39f-617508b56830.jpg",

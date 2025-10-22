@@ -279,3 +279,4 @@ D:\PrefinaHotel\HotelWebApi\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Scripting
 D:\PrefinaHotel\HotelWebApi\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 D:\PrefinaHotel\HotelWebApi\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
 D:\PrefinaHotel\HotelWebApi\bin\Debug\net8.0\HotelWebApi.staticwebassets.runtime.json
+D:\PrefinaHotel\HotelWebApi\obj\Debug\net8.0\HotelWebApi.sourcelink.json

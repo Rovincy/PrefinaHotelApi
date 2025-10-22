@@ -38,9 +38,9 @@ namespace HotelWebApi.Controllers
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
             //dev
-            //var url = $"{Request.Scheme}://{Request.Host}//";
+            var url = $"{Request.Scheme}://{Request.Host}//";
             //prod
-            var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
+            //var url = $"{Request.Scheme}://{Request.Host}/PrefinaHotelApi//";
             var response = await _context.Rooms.Where(x => x.IsActive == true).OrderBy(x => x.Name.Trim()).ToListAsync();
             foreach (var room in response)
             {
