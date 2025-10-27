@@ -204,6 +204,35 @@ namespace HotelWebApi.Controllers
             return Ok(user);
         }
 
+        [HttpPut]
+        public async Task<ActionResult<User>> PutUser(UserPutDto userDto)
+        {
+
+            //string password = PasswordHasher.hashPassword(userDto!.Password);
+            var currentUser = _context.Users.Where(x => x.Id == userDto.Id).FirstOrDefault();
+            //currentUser!.Password = password;
+            if (userDto.Password != null)
+            {
+                string password = PasswordHasher.hashPassword(userDto!.Password);
+                currentUser!.Password = password;
+            }
+            currentUser!.Email = userDto.Email;
+            currentUser!.FirstName = userDto.FirstName;
+            currentUser!.LastName = userDto.LastName;
+            currentUser!.Username = userDto.Username;
+            currentUser!.RoleId = userDto.RoleId;
+            //currentUser!.Source = userDto.Source;
+            //if (currentUser!.Password==password) {
+
+            //}
+            //var user = _mapper.Map<User>(userDto);
+            _context.Users.Update(currentUser);
+            await _context.SaveChangesAsync();
+            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return Ok(currentUser);
+        }
+
+
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
